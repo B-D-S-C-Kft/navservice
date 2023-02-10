@@ -64,5 +64,7 @@
 	</wsdl:binding>
 	<wsdl:service name="queryCashRegister">
 		<wsdl:port name="QueryCashRegister" binding="tns:queryCashRegisterBinding"/>
+			<soap:address location="https://api-onlinepenztargep.nav.gov.hu/queryCashRegisterFile/v1/queryCashRegisterStatus"/>
+		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

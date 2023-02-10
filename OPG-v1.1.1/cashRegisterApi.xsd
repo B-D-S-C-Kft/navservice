@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+# Projekt: Magyar Online Pénztárgép Rendszer cashRegisterApi XML XSD séma
+# Author: NAV Informatikai Intézet
+
+# Version: v1.1 2022/01/28
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns="http://schemas.nav.gov.hu/OPF/1.0/api" xmlns:common="http://schemas.nav.gov.hu/NTCA/1.0/common" xmlns:base="http://schemas.nav.gov.hu/OPF/1.0/base" targetNamespace="http://schemas.nav.gov.hu/OPF/1.0/api" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://schemas.nav.gov.hu/NTCA/1.0/common" schemaLocation="common.xsd"/>
+	<xs:import namespace="http://schemas.nav.gov.hu/OPF/1.0/base" schemaLocation="cashRegisterBase.xsd"/>
+	<xs:element name="QueryCashRegisterFileDataRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A naplóállomány lekérdezés operáció kérése</xs:documentation>
+			<xs:documentation xml:lang="en">Request element of the cash register file query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="QueryCashRegisterFileDataRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="QueryCashRegisterFileDataResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A naplóállomány lekérdezés operáció válasza</xs:documentation>
+			<xs:documentation xml:lang="en">Response element of the cash register file query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="QueryCashRegisterFileDataResponseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="QueryCashRegisterStatusRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A pénztárgép állapot lekérdezés operáció kérése</xs:documentation>
+			<xs:documentation xml:lang="en">Request element of the cash register status query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="QueryCashRegisterStatusRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="QueryCashRegisterStatusResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A pénztárgép állapot lekérdezés operáció válasza</xs:documentation>
+			<xs:documentation xml:lang="en">Response element of the cash register status query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="QueryCashRegisterStatusResponseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="BasicCashRegisterRequestType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Online Pénztárgép rendszerre specifikus általános kérés adatok</xs:documentation>
+			<xs:documentation xml:lang="en">Online Cash Register specific basic request data</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="common:BasicRequestType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Alap kérés adatok</xs:documentation>
+					<xs:documentation xml:lang="en">Basic request data</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="software" type="SoftwareType">
+						<xs:annotation>
+							<xs:documentation xml:lang="hu">A kliensprogram adatai</xs:documentation>
+							<xs:documentation xml:lang="en">Client software data</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BasicCashRegisterResponseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Online Pénztárgép rendszerre specifikus általános válasz adatok</xs:documentation>
+			<xs:documentation xml:lang="en">Online Cash Register specific basic response data</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="common:BasicResponseType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Alap válasz adatok</xs:documentation>
+					<xs:documentation xml:lang="en">Basic response data</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="software" type="SoftwareType">
+						<xs:annotation>
+							<xs:documentation xml:lang="hu">A kliensprogram adatai</xs:documentation>
+							<xs:documentation xml:lang="en">Client software data</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterFileDataListType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A lekérdezett naplóállományok listája</xs:documentation>
+			<xs:documentation xml:lang="en">List of cash register files</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="cashRegisterFileData" type="CashRegisterFileDataType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Egy naplóállomány adata</xs:documentation>
+					<xs:documentation xml:lang="en">Data of one cash register file</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterFileDataResultType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Naplóállomány lekérdezés eredménye</xs:documentation>
+			<xs:documentation xml:lang="en">Cash register file query result</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="cashRegisterFileDataList" type="CashRegisterFileDataListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Naplóállományok listája</xs:documentation>
+					<xs:documentation xml:lang="en">List of cash register files</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="allFilesSent" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Az összes kért állomány visszaadásra került</xs:documentation>
+					<xs:documentation xml:lang="en">All requested files are sent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="filesNotSentReason" type="base:FilesNotSentReasonType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Annak az oka, hogy miért nem lett az összes kért naplóállomány elküldve</xs:documentation>
+					<xs:documentation xml:lang="en">Reason of not all requested files sent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="minAvailableFileNumber" type="base:FileNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A lekérdezhető legkisebb sorszámú állomány</xs:documentation>
+					<xs:documentation xml:lang="en">First available cash register file number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maxAvailableFileNumber" type="base:FileNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A lekérdezhető legnagyobb sorszámú állomány</xs:documentation>
+					<xs:documentation xml:lang="en">Last available cash register file number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterFileDataQueryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Pénztárgép naplóállomány lekérdezés paramétere</xs:documentation>
+			<xs:documentation xml:lang="en">Cash register file query parameter</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="APNumber" type="base:APNumberType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Pénztárgép AP száma, amelyre a lekérdezés vonatkozik</xs:documentation>
+					<xs:documentation xml:lang="en">Cash register AP number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fileNumberStart" type="base:FileNumberType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Első lekérdezett naplóállomány sorszáma</xs:documentation>
+					<xs:documentation xml:lang="en">First cash register file number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fileNumberEnd" type="base:FileNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Utolsó lekérdezett naplóállomány sorszáma</xs:documentation>
+					<xs:documentation xml:lang="en">Last cash register file number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterStatusType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Pénztárgép állapota</xs:documentation>
+			<xs:documentation xml:lang="en">Cash register status</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="APNumber" type="base:APNumberType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Pénztárgép AP száma</xs:documentation>
+					<xs:documentation xml:lang="en">Cash register AP number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastCommunicationDate" type="common:GenericTimestampType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Utolsó kommunikáció dátuma</xs:documentation>
+					<xs:documentation xml:lang="en">Last communication date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastFileDate" type="common:GenericTimestampType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Utolsó állományküldés dátuma</xs:documentation>
+					<xs:documentation xml:lang="en">Date of the last sent file</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="minAvailableFileNumber" type="base:FileNumberType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A lekérdezhető legkisebb sorszámú állomány</xs:documentation>
+					<xs:documentation xml:lang="en">First available cash register file number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maxAvailableFileNumber" type="base:FileNumberType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A lekérdezhető legnagyobb sorszámú állomány</xs:documentation>
+					<xs:documentation xml:lang="en">Last available cash register file number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterStatusListType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Pénztárgépek állapotainak listája</xs:documentation>
+			<xs:documentation xml:lang="en">List of cash register status</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="cashRegisterStatus" type="CashRegisterStatusType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Pénztárgép állapota</xs:documentation>
+					<xs:documentation xml:lang="en">Cash register status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterStatusResultType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Pénztárgép állapot lekérdezés eredménye</xs:documentation>
+			<xs:documentation xml:lang="en">Cash register status query result</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="cashRegisterStatusList" type="CashRegisterStatusListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Pénztárgépek állapotainak listája</xs:documentation>
+					<xs:documentation xml:lang="en">List of cash register status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterStatusQueryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A pénztárgép állapot lekérdezés paramétere</xs:documentation>
+			<xs:documentation xml:lang="en">Cash register status query parameter</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="APNumberList" type="APNumberListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A pénztárgépek listája, amelyre a lekérdezés vonatkozik</xs:documentation>
+					<xs:documentation xml:lang="en">List of cash register AP numbers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashRegisterFileDataType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">Egy naplóállomány adata</xs:documentation>
+			<xs:documentation xml:lang="en">Data of one cash register file</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="cashRegisterFileName" type="common:SimpleText50NotBlankType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Naplóállomány neve</xs:documentation>
+					<xs:documentation xml:lang="en">Cash register filename</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cashRegisterFile" type="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Naplóállomány</xs:documentation>
+					<xs:documentation xml:lang="en">Cash register file</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fileValidationResultCode" type="base:ValidationResultCodeType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Naplóállomány validációs eredmény</xs:documentation>
+					<xs:documentation xml:lang="en">File validation result</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fileValidationErrorCode" type="common:SimpleText100NotBlankType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Validációs hibakód</xs:documentation>
+					<xs:documentation xml:lang="en">Validation error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueryCashRegisterStatusRequestType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A pénztárgép állapot lekérdezés operáció kérés típusa</xs:documentation>
+			<xs:documentation xml:lang="en">Request type of the cash register status query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BasicCashRegisterRequestType">
+				<xs:sequence>
+					<xs:element name="cashRegisterStatusQuery" type="CashRegisterStatusQueryType">
+						<xs:annotation>
+							<xs:documentation xml:lang="hu">A pénztárgép állapot lekérdezés paramétere</xs:documentation>
+							<xs:documentation xml:lang="en">Paramateres of the cash register status query</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="QueryCashRegisterStatusResponseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A pénztárgép állapot lekérdezés operáció válasz típusa</xs:documentation>
+			<xs:documentation xml:lang="en">Response type of the cash register status query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BasicCashRegisterResponseType">
+				<xs:sequence>
+					<xs:element name="cashRegisterStatusResult" type="CashRegisterStatusResultType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="hu">A pénztárgép állapot lekérdezés eredménye</xs:documentation>
+							<xs:documentation xml:lang="en">Cash register status query result</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="QueryCashRegisterFileDataRequestType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A naplóállomány lekérdezés operáció kérés típusa</xs:documentation>
+			<xs:documentation xml:lang="en">Request type of the cash register file query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BasicCashRegisterRequestType">
+				<xs:sequence>
+					<xs:element name="cashRegisterFileDataQuery" type="CashRegisterFileDataQueryType">
+						<xs:annotation>
+							<xs:documentation xml:lang="hu">A naplóállomány lekérdezés paramétere</xs:documentation>
+							<xs:documentation xml:lang="en">Paramateres of the cash register file query</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="QueryCashRegisterFileDataResponseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A naplóállomány lekérdezés operáció válasz típusa</xs:documentation>
+			<xs:documentation xml:lang="en">Response type of the cash register file query operation</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="BasicCashRegisterResponseType">
+				<xs:sequence>
+					<xs:element name="cashRegisterFileDataResult" type="CashRegisterFileDataResultType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="hu">A naplóállomány lekérdezés eredménye</xs:documentation>
+							<xs:documentation xml:lang="en">Cash register file query result</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SoftwareType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A kliensprogram adatai</xs:documentation>
+			<xs:documentation xml:lang="en">Client software data</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="softwareId" type="base:SoftwareIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram azonosítója</xs:documentation>
+					<xs:documentation xml:lang="en">Client software ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="softwareName" type="common:SimpleText50NotBlankType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram neve</xs:documentation>
+					<xs:documentation xml:lang="en">Client software name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="softwareOperation" type="base:SoftwareOperationType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram működési típusa (lokális program vagy online szolgáltatás)</xs:documentation>
+					<xs:documentation xml:lang="en">Client software operation type (local program or online service)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="softwareMainVersion" type="common:SimpleText15NotBlankType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram főverziója</xs:documentation>
+					<xs:documentation xml:lang="en">Client software main version</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="softwareDevName" type="common:SimpleText512NotBlankType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram fejlesztőjének neve</xs:documentation>
+					<xs:documentation xml:lang="en">Name of the Client software's developer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="softwareDevContact" type="common:SimpleText200NotBlankType">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram fejlesztőjének elektronikus elérhetősége</xs:documentation>
+					<xs:documentation xml:lang="en">Electronic contact of the Client software's developer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="softwareDevCountryCode" type="common:CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram fejlesztőjének ISO-3166 alpha2 országkódja</xs:documentation>
+					<xs:documentation xml:lang="en">ISO-3166 alpha2 country code of the Client software's developer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="softwareDevTaxNumber" type="common:SimpleText50NotBlankType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">A kliensprogram fejlesztőjének adószáma</xs:documentation>
+					<xs:documentation xml:lang="en">Tax number of the Client software's developer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="APNumberListType">
+		<xs:annotation>
+			<xs:documentation xml:lang="hu">A lekérdezett naplóállományok listája</xs:documentation>
+			<xs:documentation xml:lang="en">List of cash register files</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="APNumber" type="base:APNumberType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="hu">Pénztárgép AP száma, amelyre a lekérdezés vonatkozik</xs:documentation>
+					<xs:documentation xml:lang="en">Cash register AP number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
